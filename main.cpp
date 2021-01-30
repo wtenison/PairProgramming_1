@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "include/catch.hpp"
 
 int foo(std::string inputString)
 {
