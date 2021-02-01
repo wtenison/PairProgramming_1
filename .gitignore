@@ -1,4 +1,4 @@
 .gitignore
 .vscode/**
 include/**
-a.exe
+*.exe

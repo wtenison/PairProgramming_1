@@ -1,12 +1,15 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
-unsigned int Factorial (unsigned int number)
+int calculate(std::string inputString)
 {
-    return number <= 1 ? number : Factorial(number - 1) * number;
+    if (!inputString.size())
+        return 0;
+
+    return 1;
 }
 
-TEST_CASE("Factorial tests", "[Factorial]")
+TEST_CASE("Caclulate tests")
 {
-    REQUIRE( Factorial(1) == 1 );
+    REQUIRE( calculate("") == 0 );
 }
