@@ -1,8 +1,19 @@
-#define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
+#define CATCH_CONFIG_MAIN
+#include <vector>
 #include "catch.hpp"
 
-unsigned int Factorial( unsigned int number ) {
-    return number <= 1 ? number : Factorial(number-1)*number;
+int calculate(std::string inputString)
+{
+    std::vector<std::string> tokens;
+
+    // Check for empty string
+    if (!inputString.size())
+        return 0;
+
+    // Break up the input string into variables
+    while(inputString)    
+    
+    return 1;
 }
 
 TEST_CASE( "Factorials are computed", "[factorial]" ) {
