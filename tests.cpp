@@ -1,12 +1,15 @@
 #define CATCH_CONFIG_MAIN
-#include <vector>
+
 #include <iostream>
+#include <string>
+#include <vector>
 #include "catch.hpp"
 
 int calculate(std::string inputString)
 {
     std::vector<std::string> tokens;
-    std::stringstream string(inputString);
+    std::stringstream s_string(inputString);
+
     int sum = 0;
 
     // Check for empty string
@@ -14,16 +17,23 @@ int calculate(std::string inputString)
         return 0;
 
     // Break up the input string into variables
-    while(inputString != "")
+    while(s_string.good())
     {
-        std::string saved;
-        getline(string, saved, ",");
-        tokens.append(saved);
+        std::string saved("");
+        std::getline(s_string, saved, ',');
+        tokens.push_back(saved);
     }    
     
-    for(auto i : tokens)
+    // Add up the positive numbers
+    for(std::string i : tokens)
     {
-        sum += atoi(i)
+        if (atoi(i.c_str()) > -1)
+            sum += atoi(i.c_str());
+        else
+        {
+            sum = -1;
+            throw printf("ERROR : Negative value found\n");
+        }
     }
 
     return sum;
@@ -31,8 +41,10 @@ int calculate(std::string inputString)
 
 TEST_CASE( "Factorials are computed", "[factorial]" ) 
 {
-    REQUIRE( Factorial(1) == 1 );
-    REQUIRE( Factorial(2) == 2 );
-    REQUIRE( Factorial(3) == 6 );
-    REQUIRE( Factorial(10) == 3628800 );
+    REQUIRE( calculate("") == 0 );
+    REQUIRE( calculate("232") == 232 );
+    REQUIRE( calculate("4,79") == (83) );
+    REQUIRE( calculate("14\n908") == 922);
+    REQUIRE( calculate("3,86\n91") == 180);
+    REQUIRE( calculate("56,-8") == -1);
 }
