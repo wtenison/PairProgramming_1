@@ -8,6 +8,7 @@
 int calculate(std::string inputString)
 {
     std::vector<std::string> tokens;
+    std::stringstream s_string(inputString);
 
     int sum = 0;
 
@@ -15,6 +16,7 @@ int calculate(std::string inputString)
     if (!inputString.size())
         return 0;
 
+    // Break up the input string into variables
     printf("NOTE: on %s\n", inputString.c_str());
 
     size_t indexOf_newline = inputString.find('\n');
@@ -33,7 +35,7 @@ int calculate(std::string inputString)
         std::string saved("");
         std::getline(s_string, saved, ',');
         tokens.push_back(saved);
-    }
+    }    
     
     // Add up the positive numbers
     for(std::string i : tokens)
