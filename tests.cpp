@@ -39,8 +39,13 @@ int calculate(std::string inputString)
     for(std::string i : tokens)
     {
         printf("ADDING: %d to %d\n", atoi(i.c_str()), sum);
-        if (atoi(i.c_str()) > -1)
-            sum += atoi(i.c_str());
+
+        int x = atoi(i.c_str());
+
+        if (x > 1000)
+            continue;
+        else if (x > -1)
+            sum += x;
         else
             throw printf("ERROR: Negative value found.\n");
     }
@@ -56,4 +61,5 @@ TEST_CASE( "Factorials are computed", "[factorial]" )
     REQUIRE( calculate("14\n908") == 922);
     REQUIRE( calculate("3,86\n91") == 180);
     REQUIRE_THROWS( calculate("56,-8") == -1);
+    REQUIRE( calculate("1001\n9,10") == 19);
 }
