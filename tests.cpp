@@ -8,7 +8,6 @@
 int calculate(std::string inputString)
 {
     std::vector<std::string> tokens;
-    std::stringstream s_string(inputString);
 
     int sum = 0;
 
@@ -49,7 +48,6 @@ int calculate(std::string inputString)
             throw printf("ERROR : Negative value found\n");
         }
     }
-
     return sum;
 }
 
