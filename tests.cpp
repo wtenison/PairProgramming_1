@@ -20,7 +20,7 @@ int calculate(std::string inputString)
     size_t indexOf_newline = inputString.find('\n');
     while (indexOf_newline != std::string::npos && indexOf_newline != inputString.size())
     {
-        inputString.at(indexOf_newline) = ',';
+        inputString[indexOf_newline] = ',';
         printf("NOTE: Replaced at %d\n", indexOf_newline);
         indexOf_newline = inputString.find('\n');
     }
@@ -42,9 +42,7 @@ int calculate(std::string inputString)
         if (atoi(i.c_str()) > -1)
             sum += atoi(i.c_str());
         else
-        {
-            sum = -1;
-        }
+            throw printf("ERROR: Negative value found.\n");
     }
 
     return sum;
@@ -57,5 +55,5 @@ TEST_CASE( "Factorials are computed", "[factorial]" )
     REQUIRE( calculate("4,79") == (83) );
     REQUIRE( calculate("14\n908") == 922);
     REQUIRE( calculate("3,86\n91") == 180);
-    REQUIRE( calculate("56,-8") == -1);
+    REQUIRE_THROWS( calculate("56,-8") == -1);
 }
