@@ -44,7 +44,6 @@ int calculate(std::string inputString)
         else
         {
             sum = -1;
-            throw printf("ERROR : Negative value found\n");
         }
     }
 
