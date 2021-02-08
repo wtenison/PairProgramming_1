@@ -8,7 +8,7 @@
 int calculate(std::string inputString)
 {
     std::vector<std::string> tokens;
-    char delimiter = ',';
+    std::string delimiter(",");
 
     int sum = 0;
 
@@ -16,23 +16,28 @@ int calculate(std::string inputString)
     if (!inputString.size())
         return 0;
 
-    //printf("NOTE: on %s\n", inputString.c_str());
+    printf("NOTE: on %s\n", inputString.c_str());
 
     // Check for custom delimiter --------------------------------------------------
     if (inputString.substr(0,2).compare("//") == 0)
     {
-        delimiter = inputString[2];
-        inputString = inputString.substr(4, inputString.length() - 1);
+        int i = 2;
+        delimiter = "";
+
+        while (inputString[i] != '\n')
+            delimiter.push_back(inputString[i++]);
+
+        inputString = inputString.substr(i + 1, inputString.length() - 1);
         printf("NOTE: Subtstring %s\n", inputString.c_str());
     }
 
-    // Replace '\n' with delimiter ------------------------------------------------------------
-    size_t indexOf_newline = inputString.find('\n');
-    while (indexOf_newline != std::string::npos && indexOf_newline != inputString.size())
+    // Replace delimiter with '\n' ------------------------------------------------------------
+    size_t indexOf_delimiter = inputString.find(delimiter);
+    while (indexOf_delimiter != std::string::npos && indexOf_delimiter != inputString.size())
     {
-        inputString[indexOf_newline] = delimiter;
-        printf("NOTE: Replaced at %d\n", indexOf_newline);
-        indexOf_newline = inputString.find('\n');
+        inputString.replace(indexOf_delimiter, delimiter.length(), "\n");
+        printf("NOTE: Replaced at %d\n", indexOf_delimiter);
+        indexOf_delimiter = inputString.find(delimiter);
     }
 
     std::stringstream s_string(inputString);
@@ -41,7 +46,7 @@ int calculate(std::string inputString)
     while(s_string.good())
     {
         std::string saved("");
-        std::getline(s_string, saved, delimiter);
+        std::getline(s_string, saved);
         tokens.push_back(saved);
     }
     
@@ -73,4 +78,5 @@ TEST_CASE( "Factorials are computed", "[factorial]" )
     REQUIRE_THROWS( calculate("56,-8") == -1);
     REQUIRE( calculate("1001\n9,10") == 19);
     REQUIRE( calculate("//#\n10#408\n10002#67") == 485);
+    REQUIRE( calculate("//###\n10###408\n10002###67") == 485);
 }
