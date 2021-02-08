@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "catch.hpp"
 
 int calculate(std::string inputString)
@@ -17,11 +18,16 @@ int calculate(std::string inputString)
 
     // Break up the input string into variables
     printf("NOTE: on %s\n", inputString.c_str());
+    
+    char delim = ',';
+    
+    if(inputString.substr(0,2) == "//")
+        delim = inputString[2];
 
     size_t indexOf_newline = inputString.find('\n');
     while (indexOf_newline != std::string::npos && indexOf_newline != inputString.size())
     {
-        inputString.at(indexOf_newline) = ',';
+        inputString.at(indexOf_newline) = delim;
         printf("NOTE: Replaced at %d\n", indexOf_newline);
         indexOf_newline = inputString.find('\n');
     }
@@ -32,9 +38,9 @@ int calculate(std::string inputString)
     while(s_string.good())
     {
         std::string saved("");
-        std::getline(s_string, saved, ',');
+        std::getline(s_string, saved, delim);
         tokens.push_back(saved);
-    }    
+    }
     
     // Add up the positive numbers
     for(std::string i : tokens)
@@ -61,5 +67,5 @@ TEST_CASE( "Factorials are computed", "[factorial]" )
     REQUIRE( calculate("3,86\n91") == 180 );
     REQUIRE_THROWS( calculate("-31\n2") == -1 );
     REQUIRE( calculate("23,1023") == 23 );
-    //REQUIRE( calculate("//#3,2") == 6 );
+    REQUIRE( calculate("//#3#2") == 5 );
 }
